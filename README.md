@@ -1,7 +1,7 @@
 Description
 ===========
 
-Installs the Cloudly With A Chance of Tests for ColdFusion.
+Installs the qpscanner.
 
 Attributes
 ==========
