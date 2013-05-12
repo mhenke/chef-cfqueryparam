@@ -1,4 +1,4 @@
-name             "cloudy"
+name             "qpscanner"
 maintainer       "NATHAN MISCHE"
 maintainer_email "henke.mike@gmail.com"
 license          "Apache 2.0"
@@ -12,4 +12,4 @@ end
 
 depends "zip"
 
-recipe "cloudy", "Installs Cloudy With A Chance Of Tests."
+recipe "qpscanner", "Installs qpscanner."

@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: cloudy
+# Cookbook Name:: qpscanner
 # Recipe:: default
 #
 # Copyright 2012, Nathan Mische
@@ -19,47 +19,47 @@
 
 # Install the unzip package
 
-file_name = node['cloudy']['download']['url'].split('/').last
+file_name = node['qpscanner']['download']['url'].split('/').last
 
-node.set['cloudy']['owner'] = node['cf10']['installer']['runtimeuser'] if node['cloudy']['owner'] == nil
+node.set['qpscanner']['owner'] = node['cf10']['installer']['runtimeuser'] if node['qpscanner']['owner'] == nil
 
-# Download cloudy
+# Download qpscanner
 
 remote_file "#{Chef::Config['file_cache_path']}/#{file_name}" do
-  source "#{node['cloudy']['download']['url']}"
+  source "#{node['qpscanner']['download']['url']}"
   action :create_if_missing
   mode "0744"
   owner "root"
   group "root"
-  not_if { File.directory?("#{node['cloudy']['install_path']}/develop") }
+  not_if { File.directory?("#{node['qpscanner']['install_path']}/develop") }
 end
 
 # Create the target install directory if it doesn't exist
 
-directory "#{node['cloudy']['install_path']}" do
-  owner node['cloudy']['owner']
-  group node['cloudy']['group']
+directory "#{node['qpscanner']['install_path']}" do
+  owner node['qpscanner']['owner']
+  group node['qpscanner']['group']
   mode "0755"
   recursive true
   action :create
-  not_if { File.directory?("#{node['cloudy']['install_path']}") }
+  not_if { File.directory?("#{node['qpscanner']['install_path']}") }
 end
 
 # Extract archive
 
-script "install_cloudy" do
+script "install_qpscanner" do
   interpreter "bash"
   user "root"
   cwd "#{Chef::Config['file_cache_path']}"
   code <<-EOH
 unzip #{file_name} 
-mv Cloudy-With-A-Chance-Of-Tests-develop/* #{node['cloudy']['install_path']}
-chown -R #{node['cloudy']['owner']}:#{node['cloudy']['group']} #{node['cloudy']['install_path']}
+mv qpscanner/* #{node['qpscanner']['install_path']}
+chown -R #{node['qpscanner']['owner']}:#{node['qpscanner']['group']} #{node['qpscanner']['install_path']}
 EOH
-  not_if { File.directory?("#{node['cloudy']['install_path']}/Cloudy-With-A-Chance-Of-Tests-develop") }
+  not_if { File.directory?("#{node['qpscanner']['install_path']}/qpscanner") }
 end
 
-execute "start_cf_for_cloudy_default_cf_config" do
+execute "start_cf_for_qpscanner_default_cf_config" do
   command "/bin/true"
   notifies :start, "service[coldfusion]", :immediately
 end
