@@ -55,9 +55,8 @@ script "install_qpscanner" do
 unzip #{file_name}
 mv qpscanner-master #{node['qpscanner']['install_path']}/qpscanner
 chown -R #{node['qpscanner']['owner']}:#{node['qpscanner']['group']} #{node['qpscanner']['install_path']}/qpscanner
+rm  #{file_name}
 EOH
-  rm  #{file_name}
-  rm -rf ('qpscanner-master'}
   not_if { File.directory?("#{node['qpscanner']['install_path']}/qpscanner") }
 end
 
