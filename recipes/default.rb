@@ -33,7 +33,7 @@ remote_file "#{Chef::Config['file_cache_path']}/#{file_name}" do
   mode "0744"
   owner "root"
   group "root"
-  not_if { File.directory?("#{node['qpscanner']['install_path']}/#{file_name}) }
+  not_if { File.directory?( "#{node['qpscanner']['install_path']}/#{file_name}" ) }
 end
 
 # Create the target install directory if it doesn't exist
