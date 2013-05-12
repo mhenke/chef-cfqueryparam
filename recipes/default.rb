@@ -53,10 +53,10 @@ script "install_qpscanner" do
   cwd "#{Chef::Config['file_cache_path']}"
   code <<-EOH
 unzip #{file_name} 
-mv qpscanner/* #{node['qpscanner']['install_path']}
+mv qpscanner4/* #{node['qpscanner']['install_path']}
 chown -R #{node['qpscanner']['owner']}:#{node['qpscanner']['group']} #{node['qpscanner']['install_path']}
 EOH
-  not_if { File.directory?("#{node['qpscanner']['install_path']}/qpscanner") }
+  not_if { File.directory?("#{node['qpscanner']['install_path']}/qpscanner4") }
 end
 
 execute "start_cf_for_qpscanner_default_cf_config" do
