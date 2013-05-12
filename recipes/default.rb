@@ -55,15 +55,8 @@ script "install_qpscanner" do
 unzip #{file_name}
 mv qpscanner-master #{node['qpscanner']['install_path']}/qpscanner
 chown -R #{node['qpscanner']['owner']}:#{node['qpscanner']['group']} #{node['qpscanner']['install_path']}/qpscanner
-rm  #{file_name}
 EOH
   not_if { File.directory?("#{node['qpscanner']['install_path']}/qpscanner") }
-end
-
-# Set up ColdFusion mapping
-execute "start_cf_for_qpscanner_default_cf_config" do
-  command "/bin/true"
-  notifies :start, "service[coldfusion]", :immediately
 end
 
 coldfusion10_config "extensions" do
@@ -85,4 +78,14 @@ template "#{node['apache']['dir']}/conf.d/global-qpscanner-alias" do
   )
   only_if { node['qpscanner']['create_apache_alias'] }
   notifies :restart, "service[apache2]"
+end
+
+# Clean Up
+file "#{Chef::Config['file_cache_path']}/#{file_name}" do
+  action :delete
+end
+
+directory "#{node['qpscanner']['install_path']}/qpscanner-master" do
+  recursive true
+  action :delete
 end
