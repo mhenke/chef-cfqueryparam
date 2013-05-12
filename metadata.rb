@@ -12,4 +12,4 @@ end
 
 depends "zip"
 
-recipe "qpscanner", "Installs qpscanner"
+recipe "queryparam", "Installs qpscanner"
